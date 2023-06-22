@@ -1,0 +1,22 @@
+﻿@using Project1.Dtos;
+@model PlaylistDto;
+
+@{
+    ViewData["Title"] = "Playlist";
+}
+
+
+<div style="display:flex; flex-direction: column">
+    <div>
+        <a class="nav-link text-dark" asp-area="" asp-controller="PlaylistList" asp-action="Index">Back to playlists</a>
+    </div>
+    <h1>Do you really want to delete the playlist '@Model.Name'?</h1>
+    <div style="display: flex; flex-direction:row">
+        <div>
+            <a class="btn btn-primary" asp-area="" asp-controller="PlaylistList" asp-action="Index">No</a>
+        </div>
+        <div style="margin-left: 1em">
+            <a class="btn btn-primary" asp-area="" asp-action="DeletePlaylist" asp-route-id="@Model.Id">Yes, delete it</a>
+        </div>
+    </div>
+</div>

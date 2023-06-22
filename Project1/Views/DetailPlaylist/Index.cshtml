@@ -1,0 +1,61 @@
+﻿@using Project1.Dtos;
+@model PlaylistDtoWithSongDto;
+
+@{
+    ViewData["Title"] = "Detail page of Playlist";
+}
+
+
+<div style="display:flex; justify-content:flex-end">
+    <div style="display:flex; justify-content:flex-end">
+        <a class="nav-link text-dark" asp-area="" asp-controller="PlaylistList" asp-action="Index">Back to all playlists</a>
+    </div>
+</div>
+
+<h1>Playlist '@Model.Name'</h1>
+
+<div style="display:flex; justify-content:flex-end">
+    <div style="display:flex; justify-content:flex-end">
+        <a class="nav-link text-dark" asp-area="" asp-controller="AddSongsToPlaylist" asp-action="Index" asp-route-id="@Model.Id">Add new songs to playlist</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="RemoveSongsFromPlaylist" asp-action="Index" asp-route-id="@Model.Id">Remove songs from playlist</a>
+    </div>
+</div>
+<h3>List of all songs in the playlist</h3>
+
+@if (Model.SongCount  > 0)
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Artist</th>
+                <th>Album</th>
+                <th>ReleaseYear</th>
+                <th>Duration</th>
+                <th>Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (SongDto song in Model.Songs)
+            {
+                <tr class="">
+                    <td>@song.Title</td>
+                    <td>@song.Artist</td>
+                    <td>@song.Album</td>
+                    <td>@song.ReleaseYear</td>
+                    <td>@song.Duration</td>
+                    <td>@song.CategoryName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <span>Es wurden leider keine Songs gefunden!</span>
+}
+
+@section Scripts {
+
+    <script src="http://www.whateverscrip.org/dist/my.js"></script>
+}

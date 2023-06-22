@@ -1,0 +1,70 @@
+﻿@using Project1.Dtos;
+@model PlaylistListViewModel;
+
+@{
+    ViewData["Title"] = "Playlist";
+}
+<div style="display:flex; justify-content:flex-end">
+    <div style="display: flex; justify-content:flex-end">
+        <a class="nav-link text-dark" asp-area="" asp-controller="AddPlaylist" asp-action="Index">Add new playlist</a>
+    </div>
+</div>
+
+
+<h1>Liste aller Playlist</h1>
+
+<form asp-action="Search">
+    <div class="form-group">
+        <div>Suchterm für Playlist-Namen eingeben:</div>
+        <input asp-for="SearchTerm" class="form-control"/>
+        <input type="submit" value="Search" class="btn btn-primary" />
+    </div>
+</form>
+
+<form asp-action="Reset">
+    <input type="submit" value="Reset" class="btn btn-primary" />
+</form>
+
+@if (Model.Playlists.Count() > 0)
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>CreationDate</th>
+                <th>UpdateDate</th>
+                <th>SongCount</th>
+                <th>Link to Detail</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (PlaylistDtoWithSongDto playlist in Model.Playlists)
+            {
+                string emptyPlaylist = string.Empty;
+                if (playlist.SongCount == 0)
+                {
+                    emptyPlaylist = "empty-playlist";
+                }
+
+                <tr class="@emptyPlaylist">
+                    <td>@playlist.Name</td>
+                    <td>@playlist.CreationDate</td>
+                    <td>@playlist.UpdateDate</td>
+                    <td>@playlist.SongCount</td>
+                    <td><a class="btn btn-primary" asp-controller="DetailPlaylist" asp-action="Details" asp-route-id="@playlist.Id">Details</a></td>
+                    <td><a class="btn btn-primary" asp-controller="DeletePlaylist" asp-action="ConfirmDelete" asp-route-id="@playlist.Id">Delete</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <span>Es wurden leider keine Playlist gefunden!</span>
+}
+
+@section Scripts {
+
+    <script src="http://www.whateverscrip.org/dist/my.js"></script>
+}

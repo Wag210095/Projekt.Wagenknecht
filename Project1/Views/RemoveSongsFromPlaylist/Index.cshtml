@@ -1,0 +1,42 @@
+﻿@using Project1.Dtos;
+@model SongsToPlaylistDto;
+
+@{
+    ViewData["PlaylistId"] = Model.PlaylistId;
+}
+
+
+<div style="display:flex; justify-content:flex-end">
+    <div style="display:flex; justify-content:flex-end">
+        <a class="nav-link text-dark" asp-area="" asp-controller="PlaylistList" asp-action="Index">Back to all playlists</a>
+    </div>
+</div>
+
+<h3>List of all songs from the playlist</h3>
+
+
+<form asp-action="Remove">
+
+    @if (Model.SongsCount > 0)
+    {
+        <div style="display: flex; flex-direction: column;">
+            <h5 style="margin-bottom:1em">
+                Mit STRG können mehrere Songs ausgewählt werden.
+            </h5>
+            @Html.ListBoxFor(m => m.SongIds, Model.PossibleSongs)
+            <input hidden asp-for="PlaylistId" class="form-control" />
+
+            <input style="margin-top: 1em" type="submit" value="Remove" class="btn btn-primary" />
+        </div>
+    }
+    else
+    {
+        <span>Es wurden leider keine Songs gefunden!</span>
+    }
+</form>
+
+
+@section Scripts {
+
+    <script src="http://www.whateverscrip.org/dist/my.js"></script>
+}

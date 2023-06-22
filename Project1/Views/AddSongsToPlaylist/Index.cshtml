@@ -1,0 +1,72 @@
+﻿@using Project1.Dtos;
+@model SongsToPlaylistDto;
+
+@{
+    ViewData["PlaylistId"] = Model.PlaylistId;
+}
+
+
+<div style="display:flex; justify-content:flex-end">
+    <div style="display:flex; justify-content:flex-end">
+        <a class="nav-link text-dark" asp-area="" asp-controller="PlaylistList" asp-action="Index">Back to all playlists</a>
+    </div>
+</div>
+
+<h3>List of all songs for the playlist</h3>
+
+
+<form asp-action="Save">
+
+@if (Model.SongsCount > 0)
+{
+@*    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Artist</th>
+                <th>Album</th>
+                <th>ReleaseYear</th>
+                <th>Duration</th>
+                <th>Category</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (SelectableSongDto song in Model.Songs)
+            {
+                <tr class="">
+                    <td>@song.Title</td>
+                    <td>@song.Artist</td>
+                    <td>@song.Album</td>
+                    <td>@song.ReleaseYear</td>
+                    <td>@song.Duration</td>
+                    <td>@song.CategoryName</td>
+                    <td>
+                        <input type="checkbox" asp-for="@song.Selected">
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>*@
+
+    <div style="display: flex; flex-direction: column;">
+        <h5 style="margin-bottom:1em">
+            Mit STRG können mehrere Songs ausgewählt werden.
+        </h5>
+        @Html.ListBoxFor(m => m.SongIds, Model.PossibleSongs)
+        <input hidden asp-for="PlaylistId" class="form-control" />
+
+        <input style="margin-top: 1em" type="submit" value="Save" class="btn btn-primary" />
+    </div>
+}
+else
+{
+    <span>Es wurden leider keine Songs gefunden!</span>
+}
+</form>
+
+
+@section Scripts {
+
+    <script src="http://www.whateverscrip.org/dist/my.js"></script>
+}
